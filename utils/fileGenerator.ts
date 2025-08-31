@@ -55,6 +55,9 @@ export const downloadDocx = async (content: string, options: CustomizationOption
 
             docChildren.push(new Paragraph({
                 children: [new ImageRun({
+                    // FIX: Explicitly set the image type to 'raster' to resolve a TypeScript typing ambiguity.
+                    // The compiler was incorrectly inferring an SVG type, causing an error.
+                    type: "raster",
                     data: imageBuffer,
                     transformation: { width: scaledWidth, height: scaledHeight },
                 })],

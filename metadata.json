@@ -1,0 +1,5 @@
+{
+  "name": "Auto Doc",
+  "description": "An application that analyzes and creates professional office documents for clients using the power of Gemini AI, featuring sample templates, user account simulation, and pricing tiers to streamline document creation.",
+  "requestFramePermissions": []
+}

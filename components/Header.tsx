@@ -9,9 +9,11 @@ interface HeaderProps {
     onLogoutClick: () => void;
     onHomeClick: () => void;
     onNavClick: (anchor: string) => void;
+    onContactClick: () => void;
+    onAboutClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLoginClick, onLogoutClick, onHomeClick, onNavClick }) => {
+export const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLoginClick, onLogoutClick, onHomeClick, onNavClick, onContactClick, onAboutClick }) => {
     
     const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, anchor: string) => {
         e.preventDefault();
@@ -31,6 +33,8 @@ export const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLoginClick, onLogo
                     <a href="#testimonials" onClick={(e) => handleNav(e, 'testimonials')} className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">Testimonials</a>
                     <a href="#pricing" onClick={(e) => handleNav(e, 'pricing')} className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">Pricing</a>
                     <a href="#faq" onClick={(e) => handleNav(e, 'faq')} className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">FAQ</a>
+                    <a href="#!" onClick={(e) => { e.preventDefault(); onAboutClick(); }} className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">About</a>
+                    <a href="#!" onClick={(e) => { e.preventDefault(); onContactClick(); }} className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">Contact</a>
                 </nav>
                 <div className="flex items-center space-x-4">
                     {isLoggedIn ? (

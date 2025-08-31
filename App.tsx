@@ -8,12 +8,18 @@ import { PricingCard } from './components/PricingCard';
 import { Modal } from './components/Modal';
 import { TestimonialCard } from './components/TestimonialCard';
 import { FaqItem } from './components/FaqItem';
+import { ContactPage } from './components/ContactPage';
+import { AboutPage } from './components/AboutPage';
+import { TermsPage } from './components/TermsPage';
 import { SAMPLE_TEMPLATES, PRICING_PLANS, FEATURES, TESTIMONIALS, FAQ_DATA } from './constants';
 import type { Template, PricingPlan, Testimonial, FaqItem as FaqItemType } from './types';
 
 enum View {
     LANDING,
     EDITOR,
+    CONTACT,
+    ABOUT,
+    TERMS,
 }
 
 const App: React.FC = () => {
@@ -62,6 +68,22 @@ const App: React.FC = () => {
             window.scrollTo(0, 0);
         }
     };
+
+    const handleContactClick = () => {
+        setView(View.CONTACT);
+        window.scrollTo(0, 0);
+    };
+
+    const handleAboutClick = () => {
+        setView(View.ABOUT);
+        window.scrollTo(0, 0);
+    };
+
+    const handleTermsClick = () => {
+        setView(View.TERMS);
+        window.scrollTo(0, 0);
+    };
+
 
     const renderLandingPage = () => (
         <>
@@ -219,6 +241,37 @@ const App: React.FC = () => {
             onBack={() => setView(View.LANDING)} 
         />
     );
+    
+    const renderContactPage = () => (
+        <ContactPage />
+    );
+
+    const renderAboutPage = () => (
+        <AboutPage />
+    );
+
+    const renderTermsPage = () => (
+        <TermsPage />
+    );
+
+
+    const renderContent = () => {
+        switch (view) {
+            case View.LANDING:
+                return renderLandingPage();
+            case View.EDITOR:
+                return renderEditor();
+            case View.CONTACT:
+                return renderContactPage();
+            case View.ABOUT:
+                return renderAboutPage();
+            case View.TERMS:
+                return renderTermsPage();
+            default:
+                return renderLandingPage();
+        }
+    }
+
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -228,11 +281,17 @@ const App: React.FC = () => {
                 onLogoutClick={handleLogout}
                 onHomeClick={handleHomeClick}
                 onNavClick={handleNavClick}
+                onContactClick={handleContactClick}
+                onAboutClick={handleAboutClick}
             />
             <main className="flex-grow">
-                {view === View.LANDING ? renderLandingPage() : renderEditor()}
+                {renderContent()}
             </main>
-            <Footer />
+            <Footer 
+                onContactClick={handleContactClick} 
+                onAboutClick={handleAboutClick}
+                onTermsClick={handleTermsClick} 
+            />
 
             {showLoginModal && (
                 <Modal onClose={() => setShowLoginModal(false)}>

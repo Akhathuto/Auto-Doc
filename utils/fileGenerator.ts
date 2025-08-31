@@ -53,11 +53,20 @@ export const downloadDocx = async (content: string, options: CustomizationOption
             const scaledWidth = Math.min(imageDimensions.width, 450);
             const scaledHeight = scaledWidth * aspectRatio;
 
+            // FIX: Determine the correct image type ('jpg' or 'png') from the data URL.
+            // The value "raster" is not a valid type for the docx library's ImageRun options.
+            let imageType: "jpg" | "png";
+            if (artwork.startsWith("data:image/jpeg")) {
+                imageType = "jpg";
+            } else if (artwork.startsWith("data:image/png")) {
+                imageType = "png";
+            } else {
+                throw new Error("Unsupported image format for DOCX export. Only PNG and JPEG are supported.");
+            }
+
             docChildren.push(new Paragraph({
                 children: [new ImageRun({
-                    // FIX: Explicitly set the image type to 'raster' to resolve a TypeScript typing ambiguity.
-                    // The compiler was incorrectly inferring an SVG type, causing an error.
-                    type: "raster",
+                    type: imageType,
                     data: imageBuffer,
                     transformation: { width: scaledWidth, height: scaledHeight },
                 })],
